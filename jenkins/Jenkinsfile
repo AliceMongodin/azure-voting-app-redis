@@ -1,0 +1,40 @@
+pipeline {
+  agent any
+  stages {
+
+    stage ('install') {
+      steps {
+        apt-get update
+        apt-get install git-all
+      }
+    }
+    
+    stage ('clone repo') {
+      steps {
+        withCredentials([string(credentialsId:GITHUB_ADMIN)]){
+          sh '''
+            git clone git@github.com:AliceMongodin/azure-voting-app-redis.git azure_vote
+          '''
+        }
+      }
+    }
+
+    stage ('build docker') {
+      steps {
+        docker-compose build .
+      }
+    }
+
+    stage ('docker push') {
+      steps {
+        docker push
+      }
+    }
+
+    stage ('up docker en background') {
+      steps {
+        docker-compose up -d      
+      }
+    }
+  }
+}
