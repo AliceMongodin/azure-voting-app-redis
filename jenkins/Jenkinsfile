@@ -4,8 +4,8 @@ pipeline {
 
     stage ('install') {
       steps {
-        apt-get update
-        apt-get install git-all
+        apt-get -y update
+        apt-get -y install git-all
       }
     }
     
