@@ -1,5 +1,8 @@
 pipeline {
   agent any
+  environment {
+    GITHUB_ADMIN = credentials('GITHUB_ADMIN')
+  }
   stages {
 
     stage ('install') {
