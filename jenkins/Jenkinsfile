@@ -5,14 +5,14 @@ pipeline {
   }
   stages {
 
-    stage('install') {
+    stage ('install') {
       steps {
         apt-get -y update
         apt-get -y install git-all
       }
     }
     
-    stage('clone repo') {
+    stage ('clone repo') {
       steps {
         withCredentials([string(credentialsId:GITHUB_ADMIN)]){
           sh '''
@@ -22,19 +22,19 @@ pipeline {
       }
     }
 
-    stage('build docker') {
+    stage ('build docker') {
       steps {
         docker-compose build .
       }
     }
 
-    stage('docker push') {
+    stage ('docker push') {
       steps {
         docker push
       }
     }
 
-    stage('up docker en background') {
+    stage ('up docker en background') {
       steps {
         docker-compose up -d      
       }
